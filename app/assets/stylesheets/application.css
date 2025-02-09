@@ -2,13 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+body {
+    /* background-color: red; */
+}
+
+.content_right {
+    height: 4000px;
+}
+
+.categories:hover > :not(:hover){
+    filter: grayscale(1) blur(5px);
+}
+
+.categories a {
+    transition: .4s;
+}

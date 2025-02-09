@@ -1,38 +1,64 @@
+<% if flash[:alert] %>
+<div class="alert md:w-max w-[90%] min-h-[50px] fixed top-[50px] left-[50%] translate-x-[-50%] bg-red-50 rounded-lg py-2 px-4 flex items-center justify-center gap-3 flex-shrink-0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="25px" viewBox="0 0 20 20" fill="#dc2626" aria-hidden="true" data-slot="icon" class="om bcd flex-shrink-0"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd"></path></svg>
+    <p class="text-red-800 text-sm tracking-wide"><%= flash[:alert] %></p>
+</div>
+<% end %>
+
+
+
 <div class="flex justify-center mt-[40px]">
     <div class="md:w-[400px] w-full md:mx-auto mx-6">
-        <div class="flex justify-center">
-            <img src="https://i.ibb.co.com/M5jnS5xN/tf-logo-1.png" alt="logo" loading="lazy" width="240px"> 
+        <div class="flex justify-center mt-10">
+            <img src="https://i.ibb.co.com/dsBfczN3/tf-logo-3.png" alt="logo" loading="lazy" width="240px"> 
         </div>
-        <div class="text-center">
-            <p class="text-slate-400 text-sm">Jelajahi Tokyo Finds untuk setiap momen belanja Merchandise khilafmu asli dari Jepang!</p>
+        <div class="text-center mt-6">
+            <p class="text-slate-400 md:text-sm text-xs">Jelajahi Tokyo Finds untuk setiap momen belanja Merchandise khilafmu asli dari Jepang!</p>
+        </div>
+        <div class="text-end my-3">
+            <a href="/register" class="text-indigo-500 text-sm hover:underline">Daftar sekarang</a>
         </div>
         <div class="mt-5">
+    
 
-            <form action="">
+            <form action="/login" method="POSt">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
                 <div class="mb-4">
                     <label for="email" class="text-sm text-slate-600">Email Address</label>
                     <div class="relative">
                         <svg class="absolute ms-3 top-[50%] translate-y-[-50%]" xmlns="http://www.w3.org/2000/svg" width="22px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M5.25 4h13.5a3.25 3.25 0 0 1 3.245 3.066L22 7.25v9.5a3.25 3.25 0 0 1-3.066 3.245L18.75 20H5.25a3.25 3.25 0 0 1-3.245-3.066L2 16.75v-9.5a3.25 3.25 0 0 1 3.066-3.245L5.25 4h13.5h-13.5zM20.5 9.373l-8.15 4.29a.75.75 0 0 1-.603.043l-.096-.042L3.5 9.374v7.376a1.75 1.75 0 0 0 1.606 1.744l.144.006h13.5a1.75 1.75 0 0 0 1.744-1.607l.006-.143V9.373zM18.75 5.5H5.25a1.75 1.75 0 0 0-1.744 1.606L3.5 7.25v.429l8.5 4.473l8.5-4.474V7.25a1.75 1.75 0 0 0-1.607-1.744L18.75 5.5z" fill="#94a3b8"></path></g></svg>
-                        <input type="email" name="email" id="email" placeholder="joe@example.com" class="block focus:ring-1 focus:ring-indigo-400 border-slate-300 text-slate-600 text-sm border w-full focus:outline-none ps-11 pe-4 py-3 rounded-lg mt-1">
+                        <input required type="email" name="email" id="email" placeholder="johndoe@example.com" class="block focus:ring-1 focus:ring-indigo-400 border-slate-300 text-slate-600 text-sm border w-full focus:outline-none ps-11 pe-4 py-3 rounded-lg mt-1">
                     </div>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="text-sm text-slate-600">Password</label>
                     <div class="relative">
                         <svg class="absolute ms-3 top-[50%] translate-y-[-50%]" xmlns="http://www.w3.org/2000/svg" width="22px" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M12 2a4 4 0 0 1 4 4v2h1.75A2.25 2.25 0 0 1 20 10.25v9.5A2.25 2.25 0 0 1 17.75 22H6.25A2.25 2.25 0 0 1 4 19.75v-9.5A2.25 2.25 0 0 1 6.25 8H8V6a4 4 0 0 1 4-4zm5.75 7.5H6.25a.75.75 0 0 0-.75.75v9.5c0 .414.336.75.75.75h11.5a.75.75 0 0 0 .75-.75v-9.5a.75.75 0 0 0-.75-.75zm-5.75 4a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3zm0-10A2.5 2.5 0 0 0 9.5 6v2h5V6A2.5 2.5 0 0 0 12 3.5z" fill="#94a3b8"></path></g></svg>
-                        <input type="password" name="password" id="password" placeholder="********" class="block focus:ring-1 focus:ring-indigo-400 border-slate-300 text-slate-600 text-sm border w-full focus:outline-none ps-11 pe-4 py-3 rounded-lg mt-1">
+                        <input required type="password" name="password" id="password" placeholder="********" class="block focus:ring-1 focus:ring-indigo-400 border-slate-300 text-slate-600 text-sm border w-full focus:outline-none ps-11 pe-4 py-3 rounded-lg mt-1">
                     </div>
                 </div>
-                <div class="mt-14">
+           
+
+                <div class="mb-4 flex items-center gap-3">
+                    <input type="checkbox" name="remember_me" id="remember_me" value="1" class="border border-slate-300 p-4">
+                    <label for="remember_me" class="text-slate-500 text-sm">Ingat saya</label>
+                </div>
+                <div class="mt-10">
                     <button class="w-full bg-indigo-500 hover:bg-indigo-600/90 text-white py-3 rounded-lg font-medium cursor-pointer text-center">Masuk</button>
                 </div>
             </form>
 
-            <div class="mt-7">
+            <div class="my-7">
                 <div class="flex items-center gap-3 justify-center">
                     <div class="w-full h-[1px] bg-slate-300"></div>
                     <p class="text-slate-400">OR</p>
                     <div class="w-full h-[1px] bg-slate-300"></div>
+                </div>
+                <div class="mt-7">
+                    <a href="" class="gap-4 rounded-lg border border-slate-300 text-slate-600 items-center text-medium hover:bg-slate-50 text-sm py-3 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" style="width: 16px; height: 16px;"><path fill="#4285f4" fill-opacity="1" fill-rule="evenodd" stroke="none" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"></path><path fill="#34a853" fill-opacity="1" fill-rule="evenodd" stroke="none" d="M9.003 18c2.43 0 4.467-.806 5.956-2.18l-2.909-2.26c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z"></path><path fill="#fbbc05" fill-opacity="1" fill-rule="evenodd" stroke="none" d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z"></path><path fill="#ea4335" fill-opacity="1" fill-rule="evenodd" stroke="none" d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.428 0 9.002 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z"></path></svg>
+                        Sign In With Google</a>
                 </div>
             </div>
          

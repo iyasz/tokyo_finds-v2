@@ -18,6 +18,8 @@
     <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%= yield :css %>
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -62,9 +64,8 @@
 </div>
 
 
-  <!-- <footer>
-    <p>&copy; 2025 Website Saya</p>
-  </footer> -->
+<%= yield :scripts %>
+
 
   </body>
 </html>

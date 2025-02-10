@@ -8,6 +8,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>
+    <%= yield :css %>
 
     <link rel="shortcut icon" href="https://i.ibb.co.com/G3WFjqy9/tf-logo.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="/icon.png">
@@ -15,6 +16,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
     <%= javascript_importmap_tags %>
   </head>
 
@@ -24,9 +26,7 @@
 
   <%= yield %> 
 
-  <!-- <footer>
-    <p>&copy; 2025 Website Saya</p>
-  </footer> -->
+  <%= yield :scripts %>
 
   </body>
 </html>

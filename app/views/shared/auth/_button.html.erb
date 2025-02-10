@@ -1,0 +1,15 @@
+<div class="mt-10">
+    <button id="submit-btn" data-turbo="false" class="w-full bg-indigo-500 hover:bg-indigo-600/90 text-white py-3 rounded-lg font-medium cursor-pointer text-center"><%= text %></button>
+</div>
+
+<% content_for :scripts do %>
+  <script>
+    function disableButton() {
+        let btn = document.getElementById("submit-btn");
+        btn.setAttribute("disabled", "true");
+        btn.classList.remove("cursor-pointer");
+        btn.classList.add("opacity-50", "cursor-not-allowed");
+        btn.innerText = "Memproses ..";
+    }
+  </script>
+<% end %>

@@ -1,5 +1,3 @@
-
-
 <% if flash.any? %>
   <% flash.each do |type, message| %>
     <% bg_color, text_color, icon_color = case type.to_sym
@@ -9,8 +7,8 @@
          else ["bg-gray-50", "text-gray-800", "#6b7280"]
        end
     %>
-    <div class="alert md:w-max w-[90%] min-h-[50px] fixed top-[50px] left-[50%] translate-x-[-50%] <%= bg_color %> rounded-lg py-2 px-4 flex items-center justify-center gap-3 flex-shrink-0">
-      <svg xmlns="http://www.w3.org/2000/svg" width="25px" viewBox="0 0 20 20" fill="<%= icon_color %>" aria-hidden="true">
+    <div id="alert" class="alert z-[100] scale-50 duration-200 md:w-max w-[90%] min-h-[50px] fixed top-[50px] left-[50%] translate-x-[-50%] <%= bg_color %> rounded-lg py-2 px-4 flex items-center justify-between gap-3 flex-shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28px" viewBox="0 0 20 20" fill="<%= icon_color %>" aria-hidden="true">
         <% if type.to_sym == :error %>
           <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd"></path>
         <% elsif type.to_sym == :success %>
@@ -20,6 +18,37 @@
         <% end %>
       </svg>
       <p class="<%= text_color %> text-sm tracking-wide"><%= message %></p>
+      <button id="remove-alert" class="cursor-pointer">
+        <svg width="10px" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.314 1.187a.97.97 0 0 1 0 1.373L2.059 9.815A.97.97 0 1 1 .686 8.443l7.255-7.256a.97.97 0 0 1 1.373 0z" fill="#94a3b8"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M.686 1.185a.97.97 0 0 1 1.373 0l7.255 7.256A.97.97 0 0 1 7.94 9.814L.686 2.558a.97.97 0 0 1 0-1.373z" fill="#94a3b8"></path></svg>
+      </button>
     </div>
   <% end %>
 <% end %>
+
+<% content_for :scripts do %>
+<script>
+  setTimeout(() => {
+    let alertBox = document.getElementById("alert");
+    let removeBtn = document.getElementById("remove-alert");
+    
+    if (alertBox) {
+      alertBox.classList.remove("scale-50");
+      alertBox.classList.add("scale-100");
+
+      removeBtn.addEventListener("click", function(){
+        alertBox.remove();
+      })
+
+      setTimeout(() => {
+        alertBox.classList.add("opacity-0", "scale-75");
+        setTimeout(() => {
+          alertBox.remove();
+        }, 300);
+      }, 3000);
+
+    }
+  }, 100);
+</script>
+
+<% end %>
+

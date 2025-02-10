@@ -1,12 +1,18 @@
 class Auth::AuthController < ApplicationController
   layout "auth"
 
-
   def loginView
     render "auth/login"
   end
 
   def loginHandle
+    login_params = params.permit(:email, :password, :remember_me)
+
+    if login_params[:email].blank? || login_params[:password].blank?
+      flash.now[:error] = "Email dan Password harus diisi!"
+      return render :"auth/login", status: :unprocessable_entity
+    end
+
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       if params[:remember_me] == "1"
@@ -20,15 +26,34 @@ class Auth::AuthController < ApplicationController
 
       redirect_to "/"
     else
-      flash[:error] = "Email atau Password anda salah. Silahkan Coba Lagi"
-      redirect_to login_path
+      flash.now[:error] = "Email atau Password anda salah!"
+      render :"auth/login", status: :unprocessable_entity
     end
   end
+
+  def registerView
+    render "auth/register"
+  end
+
+  def registerHandle
+    user_params = params.permit(:name, :email, :password, :password_confirmation)
+
+    user = User.new(user_params)
+    user.roles = 2
+
+    if user.save
+      session[:user_id] = user.id
+      redirect_to "/"
+    else
+      flash.now[:error] = user.errors.full_messages.first
+      render :"auth/register", status: :unprocessable_entity
+    end
+  end
+
 
   def logout
     session[:user_id] = nil
     cookies.delete(:remember_token)
-    flash[:success] = "Berhasil Logout, Sampai Jumpa Lagi!"
     redirect_to login_path
   end
   

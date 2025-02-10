@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get "/login", to: "auth/auth#loginView"
   post "/login", to: "auth/auth#loginHandle"
+  delete "/logout", to: "auth/auth#logout"
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

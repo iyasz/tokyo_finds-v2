@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration[8.0]
     create_table :users, id: :uuid do |t|
       t.string :name
       t.string :email
-      t.string :password
+      t.string :password_digest
       t.integer :gender, limit: 1
       t.string :telp, limit: 20
       t.integer :roles, limit: 1

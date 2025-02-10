@@ -1,0 +1,25 @@
+
+
+<% if flash.any? %>
+  <% flash.each do |type, message| %>
+    <% bg_color, text_color, icon_color = case type.to_sym
+         when :error then ["bg-red-50", "text-red-800", "#dc2626"]
+         when :success then ["bg-green-50", "text-green-800", "#16a34a"]
+         when :info then ["bg-blue-50", "text-blue-800", "#2563eb"]
+         else ["bg-gray-50", "text-gray-800", "#6b7280"]
+       end
+    %>
+    <div class="alert md:w-max w-[90%] min-h-[50px] fixed top-[50px] left-[50%] translate-x-[-50%] <%= bg_color %> rounded-lg py-2 px-4 flex items-center justify-center gap-3 flex-shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25px" viewBox="0 0 20 20" fill="<%= icon_color %>" aria-hidden="true">
+        <% if type.to_sym == :error %>
+          <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd"></path>
+        <% elsif type.to_sym == :success %>
+          <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM13.707 7.293a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 1 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 0Z" clip-rule="evenodd"></path>
+        <% else %>
+        <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd"></path>
+        <% end %>
+      </svg>
+      <p class="<%= text_color %> text-sm tracking-wide"><%= message %></p>
+    </div>
+  <% end %>
+<% end %>

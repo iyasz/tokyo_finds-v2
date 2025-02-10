@@ -1,4 +1,7 @@
 class Auth::AuthController < ApplicationController
+  layout "auth"
+
+
   def loginView
     render "auth/login"
   end
@@ -17,7 +20,7 @@ class Auth::AuthController < ApplicationController
 
       redirect_to "/"
     else
-      flash[:alert] = "Email atau Password anda salah. Silahkan Coba Lagi"
+      flash[:error] = "Email atau Password anda salah. Silahkan Coba Lagi"
       redirect_to login_path
     end
   end
@@ -25,7 +28,8 @@ class Auth::AuthController < ApplicationController
   def logout
     session[:user_id] = nil
     cookies.delete(:remember_token)
-    redirect_to login_path, notice: "Logged out successfully!"
+    flash[:success] = "Berhasil Logout, Sampai Jumpa Lagi!"
+    redirect_to login_path
   end
   
 

@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
   get "/login", to: "auth/auth#loginView"
   post "/login", to: "auth/auth#loginHandle"
+
+  get '/auth/:provider/callback', to: 'auth/auth#google_auth'
+  get '/auth/failure', to: redirect('/login')
+
   get "/register", to: "auth/auth#registerView"
   post "/register", to: "auth/auth#registerHandle"
 

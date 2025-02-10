@@ -50,6 +50,28 @@ class Auth::AuthController < ApplicationController
     end
   end
 
+  def google_auth
+    auth = request.env["omniauth.auth"]
+
+    user = User.find_or_initialize_by(google_uid: auth.uid) do |u|
+      u.email = auth.info.email
+      u.name = auth.info.name
+      u.google_uid = auth.uid
+      u.roles = 2
+    end
+
+    if user.new_record?
+      if user.save
+      else
+        flash.now[:error] = user.errors.full_messages.first
+        redirect_to login_path and return
+      end
+    end
+
+    session[:user_id] = user.id
+    redirect_to root_path
+  end
+
 
   def logout
     session[:user_id] = nil

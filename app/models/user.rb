@@ -17,8 +17,9 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP, message: "tidak valid!" }
   validates :password, presence: { message: "wajib diisi!" }, 
                        length: { minimum: 8, message: "minimal 8 karakter!" }, 
-                       confirmation: { message: "tidak sesuai!" }
-  validates :password_confirmation, presence: { message: "wajib diisi!" }, on: :create
+                       confirmation: { message: "tidak sesuai!" }, 
+                       if: -> { google_uid.blank? }
+  validates :password_confirmation, presence: { message: "wajib diisi!" }, if: -> { google_uid.blank? }
 
 
 

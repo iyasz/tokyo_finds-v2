@@ -45,7 +45,7 @@ class Auth::AuthController < ApplicationController
 
     if user.save
       UserMailer.confirmation_email(user).deliver_now
-      flash.now[:success] = "Akun berhasil dibuat! Silakan cek email untuk verifikasi."
+      flash.now[:success] = "Akun berhasil dibuat! Silakan cek email untuk verifikasi!"
       render :"/auth/login"
     else
       flash.now[:error] = user.errors.full_messages.first
@@ -57,38 +57,49 @@ class Auth::AuthController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
 
     if user.nil?
-      flash[:error] = "Token tidak valid atau sudah digunakan!"
+      flash[:error] = "Token tidak valid!"
       return redirect_to "/login"
     end
 
-    user.update(confirmed_at: Time.current, confirmation_token: nil)
-    flash[:success] = "Akun berhasil diverifikasi! Silakan login."
+    if user.confirmation_token_expired?
+      flash[:error] = "Token sudah expired!"
+      return redirect_to "/login"
+    end
+
+    user.update_columns(confirmed_at: Time.current, confirmation_token: nil)
+
+    flash[:success] = "Akun berhasil diverifikasi!"
     redirect_to "/login"
+
   end
+
 
   def resend_confirmation
     user = User.find_by(confirmation_token: params[:token])
 
-    # Jika user tidak ditemukan
     if user.nil?
-      flash[:error] = "Token tidak valid atau sudah digunakan!"
+      flash[:error] = "Token tidak valid!"
       return redirect_to "/login"
     end
 
-    # Cek apakah token masih berlaku (misal: 1 jam)
     if user.confirmation_sent_at.present? && user.confirmation_sent_at > 1.hour.ago
-      flash[:info] = "Token masih berlaku. Silakan gunakan link yang telah dikirim."
       return redirect_to confirm_email_path(token: user.confirmation_token)
     end
 
-    # Token expired → Generate token baru dan kirim ulang email
-    user.update(confirmation_token: SecureRandom.urlsafe_base64, confirmation_sent_at: Time.current)
-    UserMailer.confirmation_email(user).deliver_now
+    # New Generate Token
+    begin
+      user.update_columns(confirmation_token: SecureRandom.urlsafe_base64, confirmation_sent_at: Time.current)
+      UserMailer.confirmation_email(user).deliver_now
 
-    flash[:success] = "Token baru telah dikirim ke email Anda. Silakan cek email Anda."
-    redirect_to "/login"
+      flash[:success] = "Verifikasi baru telah dikirim ke email Anda!"
+      redirect_to "/login"
+    rescue StandardError => e
+      Rails.logger.error "ERROR: #{e.message}"
+      flash[:error] = "Terjadi kesalahan, silakan coba lagi nanti!"
+      redirect_to "/login"
+    end
+
   end
-
 
 
   def google_auth

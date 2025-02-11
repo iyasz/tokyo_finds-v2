@@ -105,23 +105,42 @@ class Auth::AuthController < ApplicationController
   def google_auth
     auth = request.env["omniauth.auth"]
 
-    user = User.find_or_initialize_by(google_uid: auth.uid) do |u|
-      u.email = auth.info.email
-      u.name = auth.info.name
-      u.google_uid = auth.uid
-      u.roles = 2
+    user = User.find_by(email: auth.info.email)
+
+    user ||= User.find_by(google_uid: auth.uid)
+
+    if user && user.google_uid.present?
+      user.update_columns(email: auth.info.email)
+      session[:user_id] = user.id
+      return redirect_to "/"
     end
 
-    if user.new_record?
-      if user.save
-      else
-        flash.now[:error] = user.errors.full_messages.first
-        redirect_to login_path and return
-      end
+    if user && user.confirmed_at.nil?
+      user.update_columns(confirmed_at: Time.current, google_uid: auth.uid, confirmation_token: nil)
+      session[:user_id] = user.id
+      return redirect_to "/"
     end
+
+    if user
+      user.update_columns(google_uid: auth.uid)
+      session[:user_id] = user.id
+      return redirect_to "/"
+    end
+
+    user = User.new(
+      name: auth.info.name,
+      email: auth.info.email,
+      roles: 2,
+      google_uid: auth.uid,
+      confirmed_at: Time.current
+    )
+
+    user.password = SecureRandom.hex(10)
+    user.password_confirmation = user.password
+    user.save!
 
     session[:user_id] = user.id
-    redirect_to root_path
+    redirect_to "/"
   end
 
 

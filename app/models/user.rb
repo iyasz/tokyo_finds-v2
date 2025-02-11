@@ -15,6 +15,8 @@ class User < ApplicationRecord
   private
 
   def generate_confirmation_token
+    return if google_uid.present?
+
     self.confirmation_token = SecureRandom.urlsafe_base64
     self.confirmation_sent_at = Time.current
   end
@@ -30,7 +32,6 @@ class User < ApplicationRecord
                        confirmation: { message: "tidak sesuai!" }, 
                        if: -> { google_uid.blank? }
   validates :password_confirmation, presence: { message: "wajib diisi!" }, if: -> { google_uid.blank? }
-
 
 
 end

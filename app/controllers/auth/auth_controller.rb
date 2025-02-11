@@ -13,31 +13,25 @@ class Auth::AuthController < ApplicationController
       return render :"auth/login", status: :unprocessable_entity
     end
 
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: login_params[:email])
 
-    if user.confirmed_at.nil?
-      flash[:error] = "Aku belun diverifikasi!, Silahkan cek Email anda"
+    if user && user.confirmed_at.nil?
+      flash[:error] = "Akun belum diverifikasi! Silakan cek email Anda."
       return redirect_to "/login"
     end
 
-    if user && user.authenticate(params[:password])
-      if params[:remember_me] == "1"
-
+    if user && user.authenticate(login_params[:password])
+      if login_params[:remember_me] == "1"
         user.update(remember_token: SecureRandom.urlsafe_base64)
         cookies.permanent.signed[:remember_token] = user.remember_token
-
-      else
-        session[:user_id] = user.id
       end
 
-      if user.roles == 1
-        edirect_to "/app/dashboard"
-      else
-        edirect_to "/"
-      end
+      session[:user_id] = user.id
+
+      return redirect_to user.roles == 1 ? "/app/dashboard" : "/"
     else
-      flash[:error] = "Email atau Password anda salah!"
-      redirect_to "/login"
+      flash.now[:error] = "Email atau Password anda salah!"
+      render :"auth/login", status: :unprocessable_entity
     end
   end
 

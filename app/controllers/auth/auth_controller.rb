@@ -57,7 +57,7 @@ class Auth::AuthController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
 
     if user.nil?
-      flash[:error] = "Token tidak valid!"
+      flash[:error] = "Verifikasi tidak valid!"
       return redirect_to "/login"
     end
 
@@ -78,7 +78,7 @@ class Auth::AuthController < ApplicationController
     user = User.find_by(confirmation_token: params[:token])
 
     if user.nil?
-      flash[:error] = "Token tidak valid!"
+      flash[:error] = "Verifikasi tidak valid!"
       return redirect_to "/login"
     end
 

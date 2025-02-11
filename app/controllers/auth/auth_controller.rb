@@ -14,6 +14,12 @@ class Auth::AuthController < ApplicationController
     end
 
     user = User.find_by(email: params[:email])
+
+    if user.confirmed_at.nil?
+      flash[:error] = "Aku belun diverifikasi!, Silahkan cek Email anda"
+      return redirect_to "/login"
+    end
+
     if user && user.authenticate(params[:password])
       if params[:remember_me] == "1"
 
@@ -24,10 +30,14 @@ class Auth::AuthController < ApplicationController
         session[:user_id] = user.id
       end
 
-      redirect_to "/"
+      if user.roles == 1
+        edirect_to "/app/dashboard"
+      else
+        edirect_to "/"
+      end
     else
-      flash.now[:error] = "Email atau Password anda salah!"
-      render :"auth/login", status: :unprocessable_entity
+      flash[:error] = "Email atau Password anda salah!"
+      redirect_to "/login"
     end
   end
 

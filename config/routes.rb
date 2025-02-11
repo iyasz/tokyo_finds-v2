@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   get "/register", to: "auth/auth#registerView"
   post "/register", to: "auth/auth#registerHandle"
 
+  get "/confirm_email/:token", to: "auth#confirm_email", as: :confirm_email
+  get "/resend_confirmation/:token", to: "auth#resend_confirmation", as: :resend_confirmation
+
+
+
   delete "/logout", to: "auth/auth#logout"
 
 

@@ -31,24 +31,65 @@ class Auth::AuthController < ApplicationController
     end
   end
 
+
   def registerView
     render "auth/register"
   end
 
   def registerHandle
-    user_params = params.permit(:name, :email, :password, :password_confirmation)
+    user_params = params.except(:authenticity_token).permit(:name, :email, :password, :password_confirmation)
 
     user = User.new(user_params)
     user.roles = 2
+    user.confirmation_sent_at = Time.current
 
     if user.save
-      session[:user_id] = user.id
-      redirect_to "/"
+      UserMailer.confirmation_email(user).deliver_now
+      flash.now[:success] = "Akun berhasil dibuat! Silakan cek email untuk verifikasi."
+      render :"/auth/login"
     else
       flash.now[:error] = user.errors.full_messages.first
       render :"auth/register", status: :unprocessable_entity
     end
   end
+
+  def confirm_email
+    user = User.find_by(confirmation_token: params[:token])
+
+    if user.nil?
+      flash[:error] = "Token tidak valid atau sudah digunakan!"
+      return redirect_to "/login"
+    end
+
+    user.update(confirmed_at: Time.current, confirmation_token: nil)
+    flash[:success] = "Akun berhasil diverifikasi! Silakan login."
+    redirect_to "/login"
+  end
+
+  def resend_confirmation
+    user = User.find_by(confirmation_token: params[:token])
+
+    # Jika user tidak ditemukan
+    if user.nil?
+      flash[:error] = "Token tidak valid atau sudah digunakan!"
+      return redirect_to "/login"
+    end
+
+    # Cek apakah token masih berlaku (misal: 1 jam)
+    if user.confirmation_sent_at.present? && user.confirmation_sent_at > 1.hour.ago
+      flash[:info] = "Token masih berlaku. Silakan gunakan link yang telah dikirim."
+      return redirect_to confirm_email_path(token: user.confirmation_token)
+    end
+
+    # Token expired → Generate token baru dan kirim ulang email
+    user.update(confirmation_token: SecureRandom.urlsafe_base64, confirmation_sent_at: Time.current)
+    UserMailer.confirmation_email(user).deliver_now
+
+    flash[:success] = "Token baru telah dikirim ke email Anda. Silakan cek email Anda."
+    redirect_to "/login"
+  end
+
+
 
   def google_auth
     auth = request.env["omniauth.auth"]

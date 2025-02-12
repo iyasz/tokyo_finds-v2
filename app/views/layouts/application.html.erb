@@ -14,9 +14,7 @@
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="shortcut icon" href="https://i.ibb.co.com/G3WFjqy9/tf-logo.png" type="image/x-icon">
-    <!-- <link rel="icon" href="https://i.ibb.co.com/G3WFjqy9/tf-logo.png" type="image/png"> -->
-    <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co.com/G3WFjqy9/tf-logo.png">
 
     <%= yield :css %>
 
@@ -31,7 +29,6 @@
   <%= render "shared/alert" %>
     
   <div class="">
-    <!-- <div class="h-[200px] w-full bg-indigo-100 absolute z-[-1] top-0 right-0 left-0"></div> -->
     <div class="flex">
         <div class="sidebar_left w-[80px] h-[100vh] bg-indigo-400 sticky left-0 top-0">
             <div class="">
@@ -55,10 +52,7 @@
         <div class="content_right w-full">
             <div class="p-6">
                 <%= yield %> 
-            
-
             </div>
-    
         </div>
     </div>
 </div>

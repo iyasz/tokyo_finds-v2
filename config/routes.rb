@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   root "client/home#index"
 
+
+  # AUTHENTICATION ROUTE
   get "/login", to: "auth/auth#loginView"
   post "/login", to: "auth/auth#loginHandle"
 
@@ -19,8 +21,14 @@ Rails.application.routes.draw do
   get "/confirm_email/:token", to: "auth/auth#confirm_email", as: :confirm_email
   get "/resend_confirmation/:token", to: "auth/auth#resend_confirmation", as: :resend_confirmation
 
-
   delete "/logout", to: "auth/auth#logout"
+
+
+  # ADMIN ROUTE
+  get "/app/dashboard", to: "admin/dashboard#index"
+
+  get "/app/product", to: "admin/product#index"
+
 
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

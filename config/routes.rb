@@ -27,7 +27,12 @@ Rails.application.routes.draw do
   # ADMIN ROUTE
   get "/app/dashboard", to: "admin/dashboard#index"
 
-  get "/app/product", to: "admin/product#index"
+  get "/app/products", to: "admin/product#index"
+  get "/app/product/new", to: "admin/product#create"
+
+  scope "/app", module: "admin" do
+    resources :brands, except: :show, controller: "brand"
+  end
 
 
 

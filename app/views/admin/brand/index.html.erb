@@ -5,27 +5,21 @@
             <h1 class="font-medium text-slate-500">New Brands</h1>
             <table class="w-full mt-4 shadow">
                 <thead class="bg-slate-200 rounded-t-lg h-[45px]">
-                    <th class="font-medium text-sm text-slate-800 text-start">ITEM</th>
-                    <th class="font-medium text-sm text-slate-800">CHARACTER</th>
-                    <th class="font-medium text-sm text-slate-800">RELEASE</th>
-                    <th class="font-medium text-sm text-slate-800">STOCK</th>
+                    <th class="font-medium text-sm text-slate-800">NO</th>
+                    <th class="font-medium text-sm text-slate-800">NAMA</th>
                     <th class="font-medium text-sm text-slate-800">AKSI</th>
                 </thead>
                 <tbody class="bg-white">
-                    <tr class="border-b border-slate-200">
-                        <td class="p-4 text-sm text-slate-700 font-medium">Figure elaina cantik</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                    </tr>
-                    <tr class="">
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                        <td class="p-4">awd</td>
-                    </tr>
+                    <% @brands.each_with_index do |brand, index| %>
+                        <tr class="border-b border-slate-200">
+                            <td class="p-4 text-sm text-slate-700 font-medium text-center"><%= index+1 %></td>
+                            <td class="p-4 text-sm text-slate-700 font-medium text-center"><%= brand.name %></td>
+                            <td class="p-4 text-sm text-slate-700 font-medium text-center">
+                                
+                            </td>
+                        </tr>
+                    <% end %>
+                 
                 </tbody>
             </table>
         </div>

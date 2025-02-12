@@ -3,6 +3,7 @@ class Admin::BrandController < ApplicationController
 
   def index
     @category = "manage"
+    @brands = Brand.all
   end
 
   def new
@@ -16,8 +17,8 @@ class Admin::BrandController < ApplicationController
       flash[:success] = "Brand berhasil dibuat!"
       redirect_to "/app/brands"
     else
-      flash[:success] = "Brand gagal dibuat!"
-      redirect_to "/app/brands"
+      flash.now[:error] = @brand.errors.full_messages.first
+      render :"admin/brand/new", status: :unprocessable_entity
     end
   end
 

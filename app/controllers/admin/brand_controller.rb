@@ -3,7 +3,7 @@ class Admin::BrandController < ApplicationController
 
   def index
     @category = "manage"
-    @brands = Brand.all
+    @brands = Brand.page(params[:page]).per(5)
   end
 
   def new
@@ -23,15 +23,26 @@ class Admin::BrandController < ApplicationController
   end
 
   def edit
-    @brand = Brand.find(params[:id])
+    @brand = Brand.find_by(id: params[:id])
+
+    if @brand.nil?
+      render_not_found
+    end
   end
 
   def update
-    @brand = Brand.find(params[:id])
+    @brand = Brand.find_by(id: params[:id])
+
+    if @brand.nil?
+      render_not_found
+    end
+
     if @brand.update(brand_params)
-      redirect_to admin_brands_path, notice: "Brand berhasil diperbarui."
+      flash[:success] = "Brand berhasil diubah"
+      redirect_to "/app/brands"
     else
-      render :edit
+      flash.now[:error] = @brand.errors.full_messages.first
+      render :edit, status: :unprocessable_entity
     end
   end
 

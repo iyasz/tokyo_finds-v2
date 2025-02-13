@@ -1,7 +1,5 @@
 <div class="">
-    <div class="header mb-6">
-        <h1 class="text-2xl font-medium text-slate-600">Form Brand</h1>
-    </div>
+    <%= render "shared/admin/main/breadcrumb", form:"Brand", type:"Create" %>
     <div class="bg-white w-full h-[400px] shadow rounded-lg">
         <div class="title px-4 pt-4 flex items-center gap-3">
             <div class="bg-indigo-100 w-max p-1.5 rounded-full">
@@ -15,7 +13,7 @@
             <div class="px-4 flex flex-col min-h-[300px]">
                 <div class="">
                     <label for="name" class="text-sm text-slate-500 font-medium">Nama Brand</label>
-                    <%= render "shared/admin/main/input-name" %>
+                    <%= render "shared/admin/main/input-name", val:params[:name] %>
                 </div>
                 <div class="flex justify-center gap-2 mt-auto">
                     <%= render "shared/admin/main/btn-back", url:"/app/brands" %>

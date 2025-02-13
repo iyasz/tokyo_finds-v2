@@ -6,6 +6,13 @@ body {
     /* background-color: red; */
 }
 
+/* DEFAULT  */
+
+button {
+    cursor: pointer;
+}
+
+
 .content_right {
     /* height: 4000px; */
 }

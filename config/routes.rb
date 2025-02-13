@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   end
 
 
+  match "*path", to: "application#render_not_found", via: :all
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

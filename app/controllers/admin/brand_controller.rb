@@ -18,13 +18,14 @@ class Admin::BrandController < ApplicationController
   end
 
   def create
+    @category = "manage"
     @brand = Brand.new(brand_params)
     if @brand.save
       flash[:success] = "Brand berhasil dibuat!"
       redirect_to "/app/brands"
     else
-      flash.now[:error] = @brand.errors.full_messages.first
-      render :"admin/brand/new", status: :unprocessable_entity
+      flash[:error] = @brand.errors.full_messages.first
+      redirect_to "/app/brands/new"
     end
   end
 
@@ -38,6 +39,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def update
+    @category = "manage"
     @brand = Brand.find_by(id: params[:id])
     if @brand.nil?
       render_not_found
@@ -47,8 +49,8 @@ class Admin::BrandController < ApplicationController
       flash[:success] = "Brand berhasil diubah"
       redirect_to "/app/brands"
     else
-      flash.now[:error] = @brand.errors.full_messages.first
-      render :edit, status: :unprocessable_entity
+      flash[:error] = @brand.errors.full_messages.first
+      redirect_back fallback_location: "/app/brands"
     end
   end
 

@@ -18,13 +18,14 @@ class Admin::SeriesController < ApplicationController
   end
 
   def create
+    @category = "manage"
     @series = Series.new(series_params)
     if @series.save
       flash[:success] = "Series berhasil dibuat!"
       redirect_to "/app/series"
     else
-      flash.now[:error] = @series.errors.full_messages.first
-      render :"admin/series/new", status: :unprocessable_entity
+      flash[:error] = @series.errors.full_messages.first
+      redirect_to "/app/series/new"
     end
   end
 
@@ -38,6 +39,7 @@ class Admin::SeriesController < ApplicationController
   end
 
   def update
+    @category = "manage"
     @series = Series.find_by(id: params[:id])
     if @series.nil?
       render_not_found
@@ -47,8 +49,8 @@ class Admin::SeriesController < ApplicationController
       flash[:success] = "Series berhasil diubah"
       redirect_to "/app/series"
     else
-      flash.now[:error] = @series.errors.full_messages.first
-      render :edit, status: :unprocessable_entity
+      flash[:error] = @series.errors.full_messages.first
+      redirect_back fallback_location: "/app/series"
     end
   end
 

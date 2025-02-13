@@ -18,13 +18,14 @@ class Admin::CharacterController < ApplicationController
   end
 
   def create
+    @category = "manage"
     @character = Character.new(character_params)
     if @character.save
       flash[:success] = "Character berhasil dibuat!"
       redirect_to "/app/characters"
     else
-      flash.now[:error] = @character.errors.full_messages.first
-      render :"admin/character/new", status: :unprocessable_entity
+      flash[:error] = @character.errors.full_messages.first
+      redirect_to "/app/characters/new"
     end
   end
 
@@ -38,6 +39,7 @@ class Admin::CharacterController < ApplicationController
   end
 
   def update
+    @category = "manage"
     @character = Character.find_by(id: params[:id])
     if @character.nil?
       render_not_found
@@ -47,8 +49,8 @@ class Admin::CharacterController < ApplicationController
       flash[:success] = "Character berhasil diubah"
       redirect_to "/app/characters"
     else
-      flash.now[:error] = @character.errors.full_messages.first
-      render :edit, status: :unprocessable_entity
+      flash[:error] = @character.errors.full_messages.first
+      redirect_back fallback_location: "/app/characters"
     end
   end
 

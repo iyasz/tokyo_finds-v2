@@ -1,0 +1,26 @@
+<div class="">
+    <%= render "shared/admin/main/breadcrumb", form:"Series", type:"Create" %>
+    <div class="bg-white w-full h-[400px] shadow rounded-lg">
+        <div class="title px-4 pt-4 flex items-center gap-3">
+            <div class="bg-indigo-100 w-max p-1.5 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-aperture text-indigo-600 "><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></svg>
+            </div>
+            <h1 class="text-slate-600 tracking-wide font-medium">New Series</h1>
+        </div>
+        <%= render "shared/hr" %>
+        
+        <%= form_with url: "/app/series", method: :post, data: { turbo: false }, html: {onsubmit: "disableButton()"} do |f| %>
+            <div class="px-4 flex flex-col min-h-[300px]">
+                <div class="">
+                    <label for="name" class="text-sm text-slate-500 font-medium">Nama Series</label>
+                    <%= render "shared/admin/main/input-name", val:params[:name] %>
+                </div>
+                <div class="flex justify-center gap-2 mt-auto">
+                    <%= render "shared/admin/main/btn-back", url:"/app/series" %>
+                    <%= render "shared/admin/main/btn-submit" %>
+                </div>
+            </div>
+        <% end %>
+
+    </div>
+</div>

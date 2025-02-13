@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   root "client/home#index"
 
-
   # AUTHENTICATION ROUTE
   get "/login", to: "auth/auth#loginView"
   post "/login", to: "auth/auth#loginHandle"

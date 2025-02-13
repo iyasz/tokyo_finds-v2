@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Tokyo Finds | Tempat jual beli figure atau merchandise dari jepang!" %></title>
+    <title><%= content_for(:title) || "Tokyo Finds | Admin" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -34,29 +34,30 @@
     
     <div class="">
       <div class="flex">
-          <div class="sidebar_left lg:flex hidden w-[380px] h-[100vh] sticky left-0 top-0">
-
+          <div class="sidebar_left flex w-[380px] h-[100vh] lg:sticky fixed left-0 top-0 bottom-0 pointer-events-none z-[100]">
+            <div class="backdrop_sidebar lg:hidden hidden bg-slate-500/20 fixed w-full h-[100vh] z-[96] pointer-events-auto"></div>
+            <div class="sidebar_main bg-white border-r border-slate-200 w-[25%] z-[99] lg:translate-x-0 translate-x-[-100%] duration-300 pointer-events-auto">
               <%= render "shared/admin/layout/sidebar_main" %>
+            </div>
 
-              <div class="sidebar_child w-[75%] h-[100vh] bg-white shadow-[0_3px_10px_0_rgba(48,46,56,0.06)]">
-                <div class="p-4">
-                  <% case @category %>
-                    <% when "dashboard" %>
-                      <%= render "shared/admin/layout/sidebar_child/dashboard" %>
-                    <% when "manage" %>
-                      <%= render "shared/admin/layout/sidebar_child/manage" %>
-                    <% else %>
-                      <%= render "shared/admin/layout/sidebar_child/dashboard" %> 
-                  <% end %>
-                </div>
+            <div class="sidebar_child md:w-[75%] w-[50%] h-[100vh] bg-white shadow-[0_3px_10px_0_rgba(48,46,56,0.06)] lg:translate-x-0 translate-x-[-155%] duration-500 pointer-events-auto z-[98]">
+              <div class="p-4">
+                <% case @category %>
+                  <% when "dashboard" %>
+                    <%= render "shared/admin/layout/sidebar_child/dashboard" %>
+                  <% when "manage" %>
+                    <%= render "shared/admin/layout/sidebar_child/manage" %>
+                  <% else %>
+                    <%= render "shared/admin/layout/sidebar_child/dashboard" %> 
+                <% end %>
               </div>
-              
+            </div>
 
           </div>
 
           <div class="content_right w-full">
             <%= render "shared/admin/layout/navbar" %>
-            <div class="lg:p-6 p-4">
+            <div class="md:p-6 p-4">
                 <%= yield %> 
             </div>
           </div>

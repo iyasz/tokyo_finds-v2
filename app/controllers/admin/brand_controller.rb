@@ -29,6 +29,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def edit
+    @category = "manage"
     @brand = Brand.find_by(id: params[:id])
 
     if @brand.nil?

@@ -29,6 +29,7 @@ class Admin::SeriesController < ApplicationController
   end
 
   def edit
+    @category = "manage"
     @series = Series.find_by(id: params[:id])
 
     if @series.nil?

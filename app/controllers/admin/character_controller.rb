@@ -29,6 +29,7 @@ class Admin::CharacterController < ApplicationController
   end
 
   def edit
+    @category = "manage"
     @character = Character.find_by(id: params[:id])
 
     if @character.nil?

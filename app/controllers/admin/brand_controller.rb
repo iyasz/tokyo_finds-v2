@@ -3,7 +3,7 @@ class Admin::BrandController < ApplicationController
 
   def index
     @category = "manage"
-    @brands = Brand.page(params[:page]).per(5)
+    @brands = Brand.order(:created_at).page(params[:page]).per(5)
   end
 
   def new
@@ -32,7 +32,6 @@ class Admin::BrandController < ApplicationController
 
   def update
     @brand = Brand.find_by(id: params[:id])
-
     if @brand.nil?
       render_not_found
     end
@@ -47,9 +46,18 @@ class Admin::BrandController < ApplicationController
   end
 
   def destroy
-    @brand = Brand.find(params[:id])
-    @brand.destroy
-    redirect_to admin_brands_path, notice: "Brand berhasil dihapus."
+    @brand = Brand.find_by(id: params[:id])
+    if @brand.nil?
+      render_not_found
+    end
+
+    if @brand.destroy
+      flash[:success] = "Brand berhasil dihapus!"
+      redirect_to "/app/brands"
+    else
+      flash[:error] = "Terjadi kesalahan!"
+      redirect_to "/app/brands"
+    end
   end
 
   private

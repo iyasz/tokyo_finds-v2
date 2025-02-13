@@ -3,7 +3,13 @@ class Admin::BrandController < ApplicationController
 
   def index
     @category = "manage"
-    @brands = Brand.order(:created_at).page(params[:page]).per(5)
+    per_page = 5
+    page = params[:page].to_i > 0 ? params[:page].to_i : 1
+    offset = (page - 1) * per_page
+  
+    @brands = Brand.limit(per_page).offset(offset)
+    @total_pages = (Brand.count.to_f / per_page).ceil
+    @current_page = page
   end
 
   def new

@@ -34,7 +34,20 @@ Rails.application.routes.draw do
     resources :brands, except: :show, controller: "brand"
   end
 
+  scope "/app", module: "admin" do
+    resources :series, except: :show, controller: "series"
+  end
 
+  scope "/app", module: "admin" do
+    resources :characters, except: :show, controller: "character"
+  end
+
+  # scope "/app", module: "admin" do
+  #   resources :brands, except: :show, controller: "brand"
+  # end
+
+
+  # ERROR HANDLE 
   match "*path", to: "application#render_not_found", via: :all
 
 

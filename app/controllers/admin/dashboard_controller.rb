@@ -2,7 +2,7 @@ class Admin::DashboardController < ApplicationController
   layout "admin"
 
   def index
-    @category = "dashboard"
+    @sidebarType = "dashboard"
   end
 
 end

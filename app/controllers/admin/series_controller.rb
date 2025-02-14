@@ -2,7 +2,7 @@ class Admin::SeriesController < ApplicationController
   layout "admin"
 
   def index
-    @category = "manage"
+    @sidebarType = "manage"
     per_page = 5
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset = (page - 1) * per_page
@@ -13,12 +13,12 @@ class Admin::SeriesController < ApplicationController
   end
 
   def new
-    @category = "manage"
+    @sidebarType = "manage"
     @series = Series.new
   end
 
   def create
-    @category = "manage"
+    @sidebarType = "manage"
     @series = Series.new(series_params)
     if @series.save
       flash[:success] = "Series berhasil dibuat!"
@@ -30,7 +30,7 @@ class Admin::SeriesController < ApplicationController
   end
 
   def edit
-    @category = "manage"
+    @sidebarType = "manage"
     @series = Series.find_by(id: params[:id])
 
     if @series.nil?
@@ -39,7 +39,7 @@ class Admin::SeriesController < ApplicationController
   end
 
   def update
-    @category = "manage"
+    @sidebarType = "manage"
     @series = Series.find_by(id: params[:id])
     if @series.nil?
       render_not_found

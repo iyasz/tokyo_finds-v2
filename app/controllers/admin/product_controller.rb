@@ -2,11 +2,11 @@ class Admin::ProductController < ApplicationController
   layout "admin"
 
   def index
-    @category = "manage"
+    @sidebarType = "manage"
   end
 
   def create
-    @category = "manage"
+    @sidebarType = "manage"
     render "admin/product/create"
   end
 

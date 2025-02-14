@@ -2,8 +2,8 @@ class Admin::BrandController < ApplicationController
   layout "admin"
 
   def index
-    @category = "manage"
-    per_page = 5
+    @sidebarType = "manage"
+    per_page = 10
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset = (page - 1) * per_page
   
@@ -13,12 +13,12 @@ class Admin::BrandController < ApplicationController
   end
 
   def new
-    @category = "manage"
+    @sidebarType = "manage"
     @brand = Brand.new
   end
 
   def create
-    @category = "manage"
+    @sidebarType = "manage"
     @brand = Brand.new(brand_params)
     if @brand.save
       flash[:success] = "Brand berhasil dibuat!"
@@ -30,7 +30,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def edit
-    @category = "manage"
+    @sidebarType = "manage"
     @brand = Brand.find_by(id: params[:id])
 
     if @brand.nil?
@@ -39,7 +39,7 @@ class Admin::BrandController < ApplicationController
   end
 
   def update
-    @category = "manage"
+    @sidebarType = "manage"
     @brand = Brand.find_by(id: params[:id])
     if @brand.nil?
       render_not_found

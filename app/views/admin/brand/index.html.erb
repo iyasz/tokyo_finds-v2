@@ -55,43 +55,56 @@
             <h1 class="font-medium text-slate-500">New Brands</h1>
             <div class="bg-white shadow">
                 <div class="mt-4 overflow-auto">
+
                     <table class="w-full">
                         <thead class="bg-slate-200 rounded-t-lg h-[45px]">
-                            <th>NO</th>
-                            <th>NAMA</th>
-                            <th>CREATED AT</th>
-                            <th>AKSI</th>
+                            <tr>
+                                <th>NO</th>
+                                <th>NAMA</th>
+                                <th>CREATED AT</th>
+                                <th>AKSI</th>
+                            </tr>
                         </thead>
                         <tbody class="bg-white">
-                            <% @brands.each_with_index do |brand, index| %>
-                                <tr class="border-b border-slate-200">
-                                    <td><%= index+1 %></td>
-                                    <td><%= brand.name %></td>
-                                    <td>
-                                        <p><%= brand.created_at.strftime("%d %b %Y") %></p>
-                                        <p class="text-xs text-slate-500"><%= brand.created_at.strftime("%I:%M %p") %></p>
-                                    </td>
-                                    <td class="flex gap-2 items-center justify-center">
-                                        <%= button_to brand_path(brand), method: :delete, data: { turbo: false }, class: "bg-red-100 text-red-600 p-2 rounded-full",
-                                        onclick: "return confirm('Apakah anda ingin menghapus data ini?')" do %>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
-                                                <path d="M3 6h18"/>
-                                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                                                <line x1="10" x2="10" y1="11" y2="17"/>
-                                                <line x1="14" x2="14" y1="11" y2="17"/>
-                                            </svg>
-                                        <% end %>
-                                    
-                                        <a href="/app/brands/<%= brand.id %>/edit" data-turbo="false" class="bg-blue-100 text-blue-600 p-2 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
-                                        </a>
+                            <% if @brands.any? %>
+                                <% @brands.each_with_index do |brand, index| %>
+                                    <tr class="border-b border-slate-200">
+                                        <td><%= index + 1 %></td>
+                                        <td><%= brand.name %></td>
+                                        <td>
+                                            <p><%= brand.created_at.strftime("%d %b %Y") %></p>
+                                            <p class="text-xs text-slate-500"><%= brand.created_at.strftime("%I:%M %p") %></p>
+                                        </td>
+                                        <td class="flex gap-2 items-center justify-center">
+                                            <%= button_to brand_path(brand), method: :delete, data: { turbo: false }, class: "bg-red-100 text-red-600 p-2 rounded-full",
+                                            onclick: "return confirm('Apakah anda ingin menghapus data ini?')" do %>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
+                                                    <path d="M3 6h18"/>
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                                    <line x1="10" x2="10" y1="11" y2="17"/>
+                                                    <line x1="14" x2="14" y1="11" y2="17"/>
+                                                </svg>
+                                            <% end %>
+                                            <a href="/app/brands/<%= brand.id %>/edit" data-turbo="false" class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
+                                                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                                                    <path d="m15 5 4 4"/>
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% end %>
+                            <% else %>
+                                <tr>
+                                    <td colspan="4">
+                                        <p class="font-medium text-xl text-slate-500 pt-5">Tidak ada data</p>
                                     </td>
                                 </tr>
                             <% end %>
-                            
                         </tbody>
                     </table>
+
                 </div>
                 <div class="pagination my-6 flex justify-center gap-2 pb-5">
                     <% if @current_page > 1 %>

@@ -153,6 +153,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_024817) do
     t.string "weight"
     t.text "description"
     t.string "slug"
+    t.integer "status"
+    t.string "release"
+    t.string "estimated_arrival"
+    t.string "down_payment"
+    t.string "full_payment_discount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["brand_id"], name: "index_products_on_brand_id"

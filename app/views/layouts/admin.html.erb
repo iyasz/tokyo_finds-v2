@@ -42,7 +42,7 @@
 
             <div class="sidebar_child md:w-[75%] w-[50%] h-[100vh] bg-white shadow-[0_3px_10px_0_rgba(48,46,56,0.06)] lg:translate-x-0 translate-x-[-155%] duration-500 pointer-events-auto z-[98]">
               <div class="p-4">
-                <% case @category %>
+                <% case @sidebarType %>
                   <% when "dashboard" %>
                     <%= render "shared/admin/layout/sidebar_child/dashboard" %>
                   <% when "manage" %>

@@ -2,7 +2,7 @@ class Admin::CharacterController < ApplicationController
   layout "admin"
 
   def index
-    @category = "manage"
+    @sidebarType = "manage"
     per_page = 5
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset = (page - 1) * per_page
@@ -13,12 +13,12 @@ class Admin::CharacterController < ApplicationController
   end
 
   def new
-    @category = "manage"
+    @sidebarType = "manage"
     @character = Character.new
   end
 
   def create
-    @category = "manage"
+    @sidebarType = "manage"
     @character = Character.new(character_params)
     if @character.save
       flash[:success] = "Character berhasil dibuat!"
@@ -30,7 +30,7 @@ class Admin::CharacterController < ApplicationController
   end
 
   def edit
-    @category = "manage"
+    @sidebarType = "manage"
     @character = Character.find_by(id: params[:id])
 
     if @character.nil?
@@ -39,7 +39,7 @@ class Admin::CharacterController < ApplicationController
   end
 
   def update
-    @category = "manage"
+    @sidebarType = "manage"
     @character = Character.find_by(id: params[:id])
     if @character.nil?
       render_not_found

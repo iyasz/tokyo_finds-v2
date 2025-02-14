@@ -41,6 +41,10 @@ Rails.application.routes.draw do
     resources :characters, except: :show, controller: "character"
   end
 
+  scope "/app", module: "admin" do
+    resources :categories, except: :show, controller: "category"
+  end
+
   # scope "/app", module: "admin" do
   #   resources :brands, except: :show, controller: "brand"
   # end

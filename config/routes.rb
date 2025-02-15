@@ -45,13 +45,10 @@ Rails.application.routes.draw do
     resources :categories, except: :show, controller: "category"
   end
 
-  # scope "/app", module: "admin" do
-  #   resources :brands, except: :show, controller: "brand"
-  # end
 
-
-  # ERROR HANDLE 
-  match "*path", to: "application#render_not_found", via: :all
+  # ERROR HANDLE
+  get '*unmatched_route', to: 'application#render_not_found', via: :all, constraints: lambda { |req| !req.path.start_with?("/rails/") }
+  # match "*path", to: "application#render_not_found", via: :all, constraints: lambda { |req| !req.path.start_with?("/rails/") }
 
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

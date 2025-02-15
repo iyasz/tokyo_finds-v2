@@ -2,6 +2,7 @@ class Category < ApplicationRecord
   has_one_attached :before_cover
   has_one_attached :after_cover
 
+  validate :validate_image_presence, on: :create
   validate :validate_image_format
   validate :validate_image_size
 
@@ -9,6 +10,11 @@ class Category < ApplicationRecord
                    uniqueness: { case_sensitive: false, message: "category sudah digunakan" }
 
   private
+
+  def validate_image_presence
+    errors.add(:before_cover, "wajib diunggah!") unless before_cover.attached?
+    errors.add(:after_cover, "wajib diunggah!") unless after_cover.attached?
+  end
 
   def validate_image_format
     allowed_types = ["image/png", "image/jpeg", "image/webp"]
@@ -18,7 +24,7 @@ class Category < ApplicationRecord
     end
     if after_cover.attached? && !allowed_types.include?(after_cover.content_type)
       errors.add(:after_cover, "format tidak didukung! Gunakan PNG, JPG, atau WebP.")
-    end
+    end 
   end
 
   def validate_image_size

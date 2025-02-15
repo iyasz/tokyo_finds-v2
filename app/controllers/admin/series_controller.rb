@@ -7,7 +7,7 @@ class Admin::SeriesController < ApplicationController
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset = (page - 1) * per_page
 
-    @series = Series.limit(per_page).offset(offset)
+    @series = Series.limit(per_page).offset(offset).order(:created_at)
     @total_pages = (Series.count.to_f / per_page).ceil
     @current_page = page
   end

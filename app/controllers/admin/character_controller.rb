@@ -7,7 +7,7 @@ class Admin::CharacterController < ApplicationController
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     offset = (page - 1) * per_page
 
-    @characters = Character.limit(per_page).offset(offset)
+    @characters = Character.limit(per_page).offset(offset).order(:created_at)
     @total_pages = (Character.count.to_f / per_page).ceil
     @current_page = page
   end

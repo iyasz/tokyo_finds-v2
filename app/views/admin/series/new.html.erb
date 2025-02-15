@@ -9,7 +9,7 @@
         </div>
         <%= render "shared/hr" %>
         
-        <%= form_with url: "/app/series", method: :post, data: { turbo: false }, html: {onsubmit: "disableButton()"} do |f| %>
+        <%= form_with url: series_index_path, method: :post, data: { turbo: false }, html: {onsubmit: "disableButton()"} do |f| %>
             <div class="px-4 flex flex-col min-h-[300px] pb-5">
                 <div class="">
                     <label for="name" class="text-sm text-slate-500 font-medium">Nama Series</label>

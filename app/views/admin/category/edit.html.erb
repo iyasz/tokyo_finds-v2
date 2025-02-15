@@ -1,23 +1,31 @@
 <div class="">
-    <%= render "shared/admin/main/breadcrumb", form:"Brand", type:"Edit" %>
+    <%= render "shared/admin/main/breadcrumb", form:"Category", type:"Edit" %>
 
     <div class="bg-white w-full h-full shadow rounded-lg">
         <div class="title px-4 pt-4 flex items-center gap-3">
             <div class="bg-indigo-100 w-max p-1.5 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-aperture text-indigo-600 "><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></svg>
             </div>
-            <h1 class="text-slate-600 tracking-wide font-medium">Edit Brand</h1>
+            <h1 class="text-slate-600 tracking-wide font-medium">Edit Category</h1>
         </div>
+    
+
         <%= render "shared/hr" %>
-        
-        <%= form_with model: @brand, url: brand_path(@brand), method: :patch, data: { turbo: false }, html: {onsubmit: "disableButton()"} do |f| %>
-            <div class="px-4 flex flex-col min-h-[300px] pb-5">
-                <div class="">
-                    <label for="name" class="text-sm text-slate-500 font-medium">Nama Brand</label>
-                    <%= render "shared/admin/main/input-name", val:@brand.name %>
+        <%= form_with model: @category, url: category_path(@category), method: :patch, data: { turbo: false }, html: {onsubmit: "disableButton()"}, multipart: true do |f| %>
+            <div class="px-4 flex flex-col min-h-[430px] pb-5">
+                <div class="mb-4">
+                    <label for="name" class="text-sm text-slate-500 font-medium">Category Cover</label>
+                    <div class="flex items-center lg:gap-4 gap-3 mt-1">
+                        <%= render "shared/admin/main/input-file", js: true, name: "before_cover", value: @category.before_cover.attached? ? url_for(@category.before_cover) : nil, isRequired: "2" %>
+                        <%= render "shared/admin/main/input-file", js: false, name: "after_cover", value: @category.after_cover.attached? ? url_for(@category.after_cover) : nil, isRequired: "2" %>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="name" class="text-sm text-slate-500 font-medium">Nama Category</label>
+                    <%= render "shared/admin/main/input-name", val:@category.name %>
                 </div>
                 <div class="flex justify-center gap-2 mt-auto">
-                    <%= render "shared/admin/main/btn-back", url:"/app/brands" %>
+                    <%= render "shared/admin/main/btn-back", url:"/app/categories" %>
                     <%= render "shared/admin/main/btn-submit" %>
                 </div>
             </div>

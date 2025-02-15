@@ -14,8 +14,8 @@
                 <div class="mb-4">
                     <label for="name" class="text-sm text-slate-500 font-medium">Category Cover</label>
                     <div class="flex items-center lg:gap-4 gap-3 mt-1">
-                        <%= render "shared/admin/main/input-file", name:"before_cover" %>
-                        <%= render "shared/admin/main/input-file", name:"after_cover" %>
+                        <%= render "shared/admin/main/input-file", js: true, name:"before_cover" %>
+                        <%= render "shared/admin/main/input-file", js: false, name:"after_cover" %>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -32,26 +32,3 @@
     </div>
 </div>
 
-<% content_for :scripts do %>
-  <script>
-    function triggerFileInput(id) {
-        document.getElementById(id).click();
-    }
-
-    function previewImage(event, name) {
-        let input = event.target;
-        let preview = document.getElementById("preview_" + name);
-
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-            
-            reader.onload = function (e) {
-                preview.src = e.target.result;
-                preview.classList.remove("hidden"); 
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-  </script>
-<% end %>
